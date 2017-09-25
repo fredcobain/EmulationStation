@@ -18,7 +18,7 @@
 #include "components/MenuComponent.h"
 #include "VolumeControl.h"
 
-GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MENU"), mVersion(window)
+GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MENU"), mVersion(window)
 {
 	// MAIN MENU
 
@@ -65,7 +65,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 			mWindow->pushGui(s);
 	});
 
-	addEntry("SOUND SETTINGS", 0x777777FF, true, 
+	addEntry("CONFIGURAR SOM", 0x777777FF, true, 
 		[this] {
 			auto s = new GuiSettings(mWindow, "SOUND SETTINGS");
 
@@ -84,7 +84,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 			mWindow->pushGui(s);
 	});
 
-	addEntry("UI SETTINGS", 0x777777FF, true,
+	addEntry("CONFIGURAR UI", 0x777777FF, true,
 		[this] {
 			auto s = new GuiSettings(mWindow, "UI SETTINGS");
 
@@ -163,7 +163,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 			mWindow->pushGui(s);
 	});
 
-	addEntry("OTHER SETTINGS", 0x777777FF, true,
+	addEntry("OUTRAS CONFIGS", 0x777777FF, true,
 		[this] {
 			auto s = new GuiSettings(mWindow, "OTHER SETTINGS");
 
@@ -187,67 +187,67 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 			mWindow->pushGui(s);
 	});
 
-	addEntry("CONFIGURE INPUT", 0x777777FF, true, 
+	addEntry("CONFIGURAR CONTROLES", 0x777777FF, true, 
 		[this] {
 			Window* window = mWindow;
-			window->pushGui(new GuiMsgBox(window, "ARE YOU SURE YOU WANT TO CONFIGURE INPUT?", "YES",
+			window->pushGui(new GuiMsgBox(window, "TEM CERTEZA?", "SIM",
 				[window] {
 					window->pushGui(new GuiDetectDevice(window, false, nullptr));
-				}, "NO", nullptr)
+				}, "NÃO", nullptr)
 			);
 	});
 
-	addEntry("QUIT", 0x777777FF, true, 
+	addEntry("SAIR", 0x777777FF, true, 
 		[this] {
-			auto s = new GuiSettings(mWindow, "QUIT");
+			auto s = new GuiSettings(mWindow, "SAIR");
 			
 			Window* window = mWindow;
 
 			ComponentListRow row;
 			row.makeAcceptInputHandler([window] {
-				window->pushGui(new GuiMsgBox(window, "REALLY RESTART?", "YES",
+				window->pushGui(new GuiMsgBox(window, "TEM CERTEZA?", "SIM",
 				[] {
 					if(quitES("/tmp/es-restart") != 0)
 						LOG(LogWarning) << "Restart terminated with non-zero result!";
-				}, "NO", nullptr));
+				}, "NÃO", nullptr));
 			});
-			row.addElement(std::make_shared<TextComponent>(window, "RESTART EMULATIONSTATION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+			row.addElement(std::make_shared<TextComponent>(window, "REINICIAR INTERFACE", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 			s->addRow(row);
 
 			row.elements.clear();
 			row.makeAcceptInputHandler([window] {
-				window->pushGui(new GuiMsgBox(window, "REALLY RESTART?", "YES", 
+				window->pushGui(new GuiMsgBox(window, "TEM CERTEZA?", "SIM", 
 				[] { 
 					if(quitES("/tmp/es-sysrestart") != 0)
 						LOG(LogWarning) << "Restart terminated with non-zero result!";
-				}, "NO", nullptr));
+				}, "NÃO", nullptr));
 			});
-			row.addElement(std::make_shared<TextComponent>(window, "RESTART SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+			row.addElement(std::make_shared<TextComponent>(window, "REINICIAR SISTEMA", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 			s->addRow(row);
 
 			row.elements.clear();
 			row.makeAcceptInputHandler([window] {
-				window->pushGui(new GuiMsgBox(window, "REALLY SHUTDOWN?", "YES", 
+				window->pushGui(new GuiMsgBox(window, "DESLIGAR?", "SIM", 
 				[] { 
 					if(quitES("/tmp/es-shutdown") != 0)
 						LOG(LogWarning) << "Shutdown terminated with non-zero result!";
-				}, "NO", nullptr));
+				}, "NÃO", nullptr));
 			});
-			row.addElement(std::make_shared<TextComponent>(window, "SHUTDOWN SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+			row.addElement(std::make_shared<TextComponent>(window, "DESLIGAR FREDOPIE", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 			s->addRow(row);
 
-			if(Settings::getInstance()->getBool("ShowExit"))
+			if(Settings::getInstance()->getBool("SAIR"))
 			{
 				row.elements.clear();
 				row.makeAcceptInputHandler([window] {
-					window->pushGui(new GuiMsgBox(window, "REALLY QUIT?", "YES", 
+					window->pushGui(new GuiMsgBox(window, "DESEJA SAIR?", "SIM", 
 					[] { 
 						SDL_Event ev;
 						ev.type = SDL_QUIT;
 						SDL_PushEvent(&ev);
-					}, "NO", nullptr));
+					}, "NÃO", nullptr));
 				});
-				row.addElement(std::make_shared<TextComponent>(window, "QUIT EMULATIONSTATION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+				row.addElement(std::make_shared<TextComponent>(window, "SAIR", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 				s->addRow(row);
 			}
 
@@ -256,7 +256,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 
 	mVersion.setFont(Font::get(FONT_SIZE_SMALL));
 	mVersion.setColor(0xC6C6C6FF);
-	mVersion.setText("EMULATIONSTATION V" + strToUpper(PROGRAM_VERSION_STRING));
+	mVersion.setText("FREDOPIE V" + strToUpper(PROGRAM_VERSION_STRING));
 	mVersion.setAlignment(ALIGN_CENTER);
 
 	addChild(&mMenu);
@@ -308,8 +308,8 @@ bool GuiMenu::input(InputConfig* config, Input input)
 std::vector<HelpPrompt> GuiMenu::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts;
-	prompts.push_back(HelpPrompt("up/down", "choose"));
-	prompts.push_back(HelpPrompt("a", "select"));
-	prompts.push_back(HelpPrompt("start", "close"));
+	prompts.push_back(HelpPrompt("SETAS", "ESCOLHER"));
+	prompts.push_back(HelpPrompt("A", "SELECIONAR"));
+	prompts.push_back(HelpPrompt("START", "FECHAR"));
 	return prompts;
 }

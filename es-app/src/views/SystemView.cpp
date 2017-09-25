@@ -181,7 +181,7 @@ void SystemView::onCursorChanged(const CursorState& state)
 			ss << "CONFIGURATION";
 		// only display a game count if there are at least 2 games
 		else if(gameCount > 1)
-			ss << gameCount << " GAMES AVAILABLE";
+			ss << gameCount << " JOGOS";
 
 		mSystemInfo.setText(ss.str()); 
 	}, false, 1);
@@ -334,8 +334,8 @@ void SystemView::render(const Eigen::Affine3f& parentTrans)
 std::vector<HelpPrompt> SystemView::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts;
-	prompts.push_back(HelpPrompt("left/right", "choose"));
-	prompts.push_back(HelpPrompt("a", "select"));
+	prompts.push_back(HelpPrompt("left/right", "navegar"));
+	prompts.push_back(HelpPrompt("a", "selecionar"));
 	return prompts;
 }
 
