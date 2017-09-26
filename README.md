@@ -1,7 +1,7 @@
 EmulationStation
 ================
 
-A cross-platform graphical front-end for emulators with controller navigation.
+A cross-platform graphical front-end for emulators with controller navigation. Fred
 
 Project website: http://emulationstation.org
 
