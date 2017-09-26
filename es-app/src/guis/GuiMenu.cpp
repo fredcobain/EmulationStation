@@ -199,7 +199,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MENU"), 
 
 	addEntry("SAIR", 0x777777FF, true, 
 		[this] {
-			auto s = new GuiSettings(mWindow, "SAIR");
+			auto s = new GuiSettings(mWindow, "QUIT");
 			
 			Window* window = mWindow;
 
@@ -308,8 +308,8 @@ bool GuiMenu::input(InputConfig* config, Input input)
 std::vector<HelpPrompt> GuiMenu::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts;
-	prompts.push_back(HelpPrompt("SETAS", "ESCOLHER"));
-	prompts.push_back(HelpPrompt("A", "SELECIONAR"));
-	prompts.push_back(HelpPrompt("START", "FECHAR"));
+	prompts.push_back(HelpPrompt("up/down", "ESCOLHER"));
+	prompts.push_back(HelpPrompt("a", "SELECIONAR"));
+	prompts.push_back(HelpPrompt("start", "FECHAR"));
 	return prompts;
 }
