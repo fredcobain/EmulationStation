@@ -183,7 +183,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MENU"), 
 			max_vram->setValue((float)(Settings::getInstance()->getInt("MaxVRAM")));
 			s->addWithLabel("VRAM LIMIT", max_vram);
 			s->addSaveFunc([max_vram] { Settings::getInstance()->setInt("MaxVRAM", (int)round(max_vram->getValue())); });
-
+			
 			mWindow->pushGui(s);
 	});
 
@@ -212,6 +212,17 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MENU"), 
 				}, "NÃO", nullptr));
 			});
 			row.addElement(std::make_shared<TextComponent>(window, "REINICIAR INTERFACE", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+			s->addRow(row);
+
+			row.elements.clear();
+			row.makeAcceptInputHandler([window] {
+				window->pushGui(new GuiMsgBox(window, "TEM CERTEZA?", "SIM", 
+				[] { 
+					if(quitES("/tmp/es-wifi") != 0)
+						LOG(LogWarning) << "Restart terminated with non-zero result!";
+				}, "NÃO", nullptr));
+			});
+			row.addElement(std::make_shared<TextComponent>(window, "CONFIGURAR WIFI", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 			s->addRow(row);
 
 			row.elements.clear();
